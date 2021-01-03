@@ -9,7 +9,7 @@ public class RespBody implements Serializable {
     private Integer status;
     private Object data;
 
-    private RespBody(Integer status, Object data) {
+    public RespBody(Integer status, Object data) {
         this.status = status;
         this.data = data;
     }

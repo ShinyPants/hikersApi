@@ -15,15 +15,7 @@ public class HikersException extends RuntimeException{
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getInfo() {
         return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 }
