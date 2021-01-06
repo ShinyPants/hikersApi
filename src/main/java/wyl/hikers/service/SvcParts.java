@@ -18,6 +18,16 @@ public class SvcParts{
     @Autowired
     private MpParts mysql;
 
+    /**
+     * 从MySQL同步内容到Redis
+     * @return
+     */
+    public List<Part> sync() {
+        List<Part> parts = mysql.getParts();
+        redis.refresh(parts);
+        return parts;
+    }
+
     public List<Part> getParts() {
         return redis.getParts();
     }
@@ -30,10 +40,8 @@ public class SvcParts{
         } catch (RuntimeException e) {
             throw MysqlException.insert("SvcParts.addPart", part);
         }
-        // 更新到Redis
-        List<Part> parts = mysql.getParts();
-        redis.refresh(parts);
-        return parts; // 重新更新内容
+        // 更新到Redis并返回内容
+        return sync();
     }
 
     public List<Part> updateParts(List<Part> partList) {
@@ -44,9 +52,6 @@ public class SvcParts{
         } catch (RuntimeException e) {
             throw MysqlException.update("SvcParts.updateParts", partList);
         }
-        // 更新到Redis
-        List<Part> parts = mysql.getParts();
-        redis.refresh(parts);
-        return parts;
+        return sync();
     }
 }
