@@ -15,6 +15,6 @@ public class StartTask implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // 同步parts
-        parts.sync();
+        parts.refreshFromMysql();
     }
 }

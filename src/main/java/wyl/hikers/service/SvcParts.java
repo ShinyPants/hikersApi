@@ -22,7 +22,7 @@ public class SvcParts{
      * 从MySQL同步内容到Redis
      * @return
      */
-    public List<Part> sync() {
+    public List<Part> refreshFromMysql() {
         List<Part> parts = mysql.getParts();
         redis.refresh(parts);
         return parts;
@@ -41,7 +41,7 @@ public class SvcParts{
             throw MysqlException.insert("SvcParts.addPart", part);
         }
         // 更新到Redis并返回内容
-        return sync();
+        return refreshFromMysql();
     }
 
     public List<Part> updateParts(List<Part> partList) {
@@ -52,6 +52,6 @@ public class SvcParts{
         } catch (RuntimeException e) {
             throw MysqlException.update("SvcParts.updateParts", partList);
         }
-        return sync();
+        return refreshFromMysql();
     }
 }
