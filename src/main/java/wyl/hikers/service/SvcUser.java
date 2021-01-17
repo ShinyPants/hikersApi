@@ -2,11 +2,15 @@ package wyl.hikers.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import wyl.hikers.dao.redis.RdsUser;
 import wyl.hikers.exception.MysqlException;
 import wyl.hikers.model.RespBody;
 import wyl.hikers.model.User;
-import wyl.hikers.repository.mapper.MpUser;
+import wyl.hikers.dao.mapper.MpUser;
+
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -14,18 +18,29 @@ public class SvcUser {
     @Autowired
     private MpUser mysql;
 
+    @Autowired
+    private RdsUser redis;
+
+//    @Async("asyncService")
+//    private void addOnlineUser(User user) {
+//        if (redis.isOnline(user)) {
+//            return;
+//        }
+//        redis.addOnline(user);
+//    }
+
     /**
      * 注册
-     * @param user
+     * @param user uid字段在这里没用，mail属性可选
      * @return
      */
     public RespBody register(User user) {
         // 首先检查
-        if (! (boolean) checkPhone(user.getPhone()).getData())
+        if (!(boolean) checkPhone(user.getPhone()).getData())
             return RespBody.failed("手机号码重复");
-        if (! (boolean) checkNike(user.getNikeName()).getData())
+        if (!(boolean) checkNike(user.getNikeName()).getData())
             return RespBody.failed("昵称重复");
-        if (! (boolean) checkMail(user.getMail()).getData())
+        if (!user.getMail().equals("") && !(boolean) checkMail(user.getMail()).getData())
             return RespBody.failed("邮箱重复");
         Integer res = -1;
         try {
@@ -45,7 +60,21 @@ public class SvcUser {
      * @return
      */
     public RespBody login(User user) {
-        return null;
+        User res = null;
+        // 判断登录方式
+        if (user.getPhone() != null && user.getPhone().length() > 0)
+            res = mysql.loginByPhone(user);
+        else if (user.getMail() != null && user.getMail().length() > 0)
+            res = mysql.loginByMail(user);
+        // 检查登录结果
+        if (res == null)
+            return RespBody.failed(null);
+        // 生成口令
+        res.setPwd(UUID.randomUUID().toString().replaceAll("-", ""));
+        // 保存到Redis
+//        addOnlineUser(res);
+        redis.addOnline(res);
+        return RespBody.ok(res);
     }
 
     /**

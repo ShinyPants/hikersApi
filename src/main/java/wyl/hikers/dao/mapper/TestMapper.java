@@ -1,4 +1,4 @@
-package wyl.hikers.repository.mapper;
+package wyl.hikers.dao.mapper;
 
 import org.apache.ibatis.annotations.*;
 import wyl.hikers.model.Test;

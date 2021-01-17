@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import wyl.hikers.exception.HikersException;
 import wyl.hikers.exception.MysqlException;
 import wyl.hikers.model.Part;
-import wyl.hikers.repository.mapper.MpParts;
-import wyl.hikers.repository.redis.RdsParts;
+import wyl.hikers.dao.mapper.MpParts;
+import wyl.hikers.dao.redis.RdsParts;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class SvcParts{
 
     /**
      * 从MySQL同步内容到Redis
-     * @return
+     * @return 同步的内容
      */
     public List<Part> refreshFromMysql() {
         List<Part> parts = mysql.getParts();

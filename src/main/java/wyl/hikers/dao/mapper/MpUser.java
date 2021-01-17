@@ -1,4 +1,4 @@
-package wyl.hikers.repository.mapper;
+package wyl.hikers.dao.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,17 +12,27 @@ public interface MpUser {
             "INSERT INTO users(phone, pwd, question, answer, nikeName, uname, birthday <if test='mail!=null and mail.length>0'>,mail</if>)" +
             "values(#{phone},#{pwd},#{question},#{answer},#{nikeName},#{uname},#{birthday} <if test='mail!=null and mail.length>0'>,#{mail}</if>)" +
             "</script>"})
-    public Integer register(User user);
+    Integer register(User user);
+
+    @Select("SELECT uid, phone, nikeName, uname, mail, birthday " +
+            "FROM users " +
+            "WHERE phone=#{phone} AND pwd=#{pwd} LIMIT 1")
+    User loginByPhone(User user);
+
+    @Select("SELECT uid, phone, nikeName, uname, mail, birthday " +
+            "FROM users " +
+            "WHERE mail=#{mail} AND pwd=#{pwd} LIMIT 1")
+    User loginByMail(User user);
 
     @Select("SELECT COUNT(uid) FROM users WHERE phone=#{0}")
     @ResultType(Integer.class)
-    public Integer checkPhone(String number);
+    Integer checkPhone(String number);
 
     @Select("SELECT COUNT(uid) FROM users WHERE nikeName=#{0}")
     @ResultType(Integer.class)
-    public Integer checkNike(String nike);
+    Integer checkNike(String nike);
 
     @Select("SELECT COUNT(uid) FROM users WHERE mail=#{0}")
     @ResultType(Integer.class)
-    public Integer checkMail(String mail);
+    Integer checkMail(String mail);
 }

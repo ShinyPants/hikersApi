@@ -1,4 +1,4 @@
-package wyl.hikers.repository.mapper;
+package wyl.hikers.dao.mapper;
 
 import org.apache.ibatis.annotations.*;
 import wyl.hikers.model.Part;
@@ -10,11 +10,11 @@ public interface MpParts {
     @Insert({"<script>" +
             "insert into parts(picUrl, name<if test='part.score!=null'>, score</if>) " +
             "values(#{part.picUrl}, #{part.name}<if test='part.score!=null'>, #{part.score}</if>)</script>"})
-    public Integer addPart(@Param("part") Part part);
+    Integer addPart(@Param("part") Part part);
 
     @Select("select id, picUrl, name, score from parts")
     @ResultType(Part.class)
-    public List<Part> getParts();
+    List<Part> getParts();
 
 
     @Update({"<script>" +
@@ -28,5 +28,5 @@ public interface MpParts {
             "where id=#{part.id}" +
             "</foreach>" +
             "</script>"})
-    public Integer updateParts(@Param("parts") List<Part> parts);
+    Integer updateParts(@Param("parts") List<Part> parts);
 }

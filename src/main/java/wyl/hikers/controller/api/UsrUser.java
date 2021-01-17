@@ -19,6 +19,11 @@ public class UsrUser {
         return service.register(user);
     }
 
+    @GetMapping("/login")
+    private RespBody login(User user) {
+        return service.login(user);
+    }
+
     /**
      * 验证手机号
      * @param number

@@ -16,19 +16,4 @@ public class User implements Serializable {
     private String answer;
     private Date birthday;
     private String uname;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", phone='" + phone + '\'' +
-                ", mail='" + mail + '\'' +
-                ", nikeName='" + nikeName + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", birthday=" + birthday +
-                ", uname='" + uname + '\'' +
-                '}';
-    }
 }

@@ -1,17 +1,14 @@
-package wyl.hikers.repository.redis;
+package wyl.hikers.dao.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Repository;
 import wyl.hikers.model.Part;
-import wyl.hikers.repository.mapper.MpParts;
+import wyl.hikers.dao.mapper.MpParts;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @Slf4j
