@@ -14,3 +14,6 @@ spring:
 logging:
   level:
     wyl: debug
+
+preread:
+  uploadPath: D:/hpics/

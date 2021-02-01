@@ -21,14 +21,6 @@ public class SvcUser {
     @Autowired
     private RdsUser redis;
 
-//    @Async("asyncService")
-//    private void addOnlineUser(User user) {
-//        if (redis.isOnline(user)) {
-//            return;
-//        }
-//        redis.addOnline(user);
-//    }
-
     /**
      * 注册
      * @param user uid字段在这里没用，mail属性可选
@@ -70,9 +62,9 @@ public class SvcUser {
         if (res == null)
             return RespBody.failed(null);
         // 生成口令
-        res.setPwd(UUID.randomUUID().toString().replaceAll("-", ""));
+        String pwd = UUID.randomUUID().toString().replaceAll("-", "");
+        res.setPwd(pwd);
         // 保存到Redis
-//        addOnlineUser(res);
         redis.addOnline(res);
         return RespBody.ok(res);
     }
