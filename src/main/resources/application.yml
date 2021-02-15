@@ -15,5 +15,6 @@ logging:
   level:
     wyl: debug
 
-preread:
+sys-setting:
   uploadPath: D:/hpics/
+  topicLoadNum: 20

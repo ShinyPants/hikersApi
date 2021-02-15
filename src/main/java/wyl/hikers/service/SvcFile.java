@@ -3,8 +3,7 @@ package wyl.hikers.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import wyl.hikers.config.FileConfig;
-import wyl.hikers.exception.PermissionException;
+import wyl.hikers.config.SysConfig;
 import wyl.hikers.model.RespBody;
 
 import java.io.File;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class SvcFile {
 
     @Autowired
-    private FileConfig fileConfig;
+    private SysConfig sysConfig;
 
     @Autowired
     private SvcPermission permission;
@@ -46,7 +45,7 @@ public class SvcFile {
         fileName = rename(fileName);
         // 保存
         try {
-            doSave(file.getBytes(), fileConfig.getUploadPath(), fileName);
+            doSave(file.getBytes(), sysConfig.getUploadPath(), fileName);
         } catch (Exception e) {
             return RespBody.failed("保存失败");
         }

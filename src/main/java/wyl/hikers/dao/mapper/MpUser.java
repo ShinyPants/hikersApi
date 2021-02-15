@@ -14,12 +14,12 @@ public interface MpUser {
             "</script>"})
     Integer register(User user);
 
-    @Select("SELECT uid, phone, nikeName, uname, mail, birthday " +
+    @Select("SELECT uid, phone, nikeName, uname, mail, birthday, photo " +
             "FROM users " +
             "WHERE phone=#{phone} AND pwd=#{pwd} LIMIT 1")
     User loginByPhone(User user);
 
-    @Select("SELECT uid, phone, nikeName, uname, mail, birthday " +
+    @Select("SELECT uid, phone, nikeName, uname, mail, birthday, photo " +
             "FROM users " +
             "WHERE mail=#{mail} AND pwd=#{pwd} LIMIT 1")
     User loginByMail(User user);

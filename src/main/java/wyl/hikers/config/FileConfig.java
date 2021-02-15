@@ -1,19 +1,19 @@
 package wyl.hikers.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Component
-@ConfigurationProperties(prefix = "preread")
-public class FileConfig {
+@ComponentScan
+@Configuration
+public class FileConfig implements WebMvcConfigurer {
+    @Autowired
+    private SysConfig config;
 
-    private String uploadPath;
-
-    public String getUploadPath() {
-        return uploadPath;
-    }
-
-    public void setUploadPath(String uploadPath) {
-        this.uploadPath = uploadPath;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/hpics/**").addResourceLocations("file:///"+config.getUploadPath());
     }
 }
