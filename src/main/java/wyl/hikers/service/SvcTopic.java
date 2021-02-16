@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wyl.hikers.config.SysConfig;
 import wyl.hikers.dao.mapper.MpTopic;
+import wyl.hikers.dao.redis.RdsTopic;
 import wyl.hikers.exception.MysqlException;
 import wyl.hikers.model.RespBody;
 import wyl.hikers.model.Topic;
@@ -21,6 +22,9 @@ public class SvcTopic {
 
     @Autowired
     private MpTopic mysql;
+
+    @Autowired
+    private RdsTopic redis;
 
     @Autowired
     private SysConfig config;
@@ -44,13 +48,42 @@ public class SvcTopic {
             return RespBody.failed(false);
     }
 
-    public RespBody getTopics(Integer pid) {
-        List<TopicInfo> list = mysql.getTopics(pid, config.getTopicLoadNum());
-        return RespBody.ok(list);
-    }
-
     public RespBody getTopics(Integer pid, Integer tid) {
         List<TopicInfo> list = mysql.getTopicsBottom(pid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
+    }
+
+    public RespBody isCollect(Integer uid, Integer tid) {
+        boolean flag = redis.isCollect(uid, tid);
+        return RespBody.ok(flag);
+    }
+
+    public RespBody addCollect(Integer uid, Integer tid) {
+        redis.addCollect(uid, tid);
+        mysql.addCollect(tid);
+        return RespBody.ok(null);
+    }
+
+    public RespBody delCollect(Integer uid, Integer tid) {
+        redis.delCollect(uid, tid);
+        mysql.delCollect(tid);
+        return RespBody.ok(null);
+    }
+
+    public RespBody isAgree(Integer uid, Integer tid) {
+        boolean flag = redis.isAgree(uid, tid);
+        return RespBody.ok(flag);
+    }
+
+    public RespBody addAgree(Integer uid, Integer tid) {
+        redis.addAgree(uid, tid);
+        mysql.addAgree(tid);
+        return RespBody.ok(null);
+    }
+
+    public RespBody delAgree(Integer uid, Integer tid) {
+        redis.delAgree(uid, tid);
+        mysql.delAgree(tid);
+        return RespBody.ok(null);
     }
 }

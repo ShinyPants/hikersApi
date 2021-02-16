@@ -1,9 +1,7 @@
 package wyl.hikers.dao.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.springframework.scheduling.annotation.Async;
 import wyl.hikers.model.Topic;
 import wyl.hikers.model.TopicInfo;
 
@@ -18,12 +16,31 @@ public interface MpTopic {
     Integer addTopic(@Param("t") Topic topic);
 
     @Select({"<script>" +
-            "SELECT * FROM v_topic_info WHERE pid = #{pid} ORDER BY tid DESC LIMIT #{num}" +
-            "</script>"})
-    List<TopicInfo> getTopics(Integer pid, Integer num);
-
-    @Select({"<script>" +
             "SELECT * FROM v_topic_info WHERE pid = #{pid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
             "</script>"})
     List<TopicInfo> getTopicsBottom(Integer pid, Integer tid, Integer num);
+
+    @Async("asyncService")
+    @Update({"<script>" +
+            "UPDATE topics SET collect = collect + 1 WHERE tid = #{tid};" +
+            "</script>"})
+    void addCollect(Integer tid);
+
+    @Async("asyncService")
+    @Update({"<script>" +
+            "UPDATE topics SET collect = collect - 1 WHERE tid = #{tid};" +
+            "</script>"})
+    void delCollect(Integer tid);
+
+    @Async("asyncService")
+    @Update({"<script>" +
+            "UPDATE topics SET agree = agree + 1 WHERE tid = #{tid};" +
+            "</script>"})
+    void addAgree(Integer tid);
+
+    @Async("asyncService")
+    @Update({"<script>" +
+            "UPDATE topics SET agree = agree - 1 WHERE tid = #{tid};" +
+            "</script>"})
+    void delAgree(Integer tid);
 }

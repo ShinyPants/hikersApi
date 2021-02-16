@@ -20,6 +20,10 @@ public class TopicInfo implements Serializable {
     private String photo;
     private Date time;
 
+    private Integer collect;
+    private Integer discuss;
+    private Integer agree;
+
     public void setPics(String picsJSON) {
         this.pics = JSON.parseArray(picsJSON, String.class);
     }
