@@ -48,6 +48,11 @@ public class SvcTopic {
             return RespBody.failed(false);
     }
 
+    public  RespBody getOneTopic(Integer tid) {
+        TopicInfo res = mysql.getOneTopic(tid);
+        return RespBody.ok(res);
+    }
+
     public RespBody getTopics(Integer pid, Integer tid) {
         List<TopicInfo> list = mysql.getTopicsBottom(pid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
@@ -58,13 +63,15 @@ public class SvcTopic {
         return RespBody.ok(flag);
     }
 
-    public RespBody addCollect(Integer uid, Integer tid) {
+    public RespBody addCollect(Integer uid, Integer tid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.addCollect(uid, tid);
         mysql.addCollect(tid);
         return RespBody.ok(null);
     }
 
-    public RespBody delCollect(Integer uid, Integer tid) {
+    public RespBody delCollect(Integer uid, Integer tid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.delCollect(uid, tid);
         mysql.delCollect(tid);
         return RespBody.ok(null);
@@ -75,13 +82,15 @@ public class SvcTopic {
         return RespBody.ok(flag);
     }
 
-    public RespBody addAgree(Integer uid, Integer tid) {
+    public RespBody addAgree(Integer uid, Integer tid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.addAgree(uid, tid);
         mysql.addAgree(tid);
         return RespBody.ok(null);
     }
 
-    public RespBody delAgree(Integer uid, Integer tid) {
+    public RespBody delAgree(Integer uid, Integer tid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.delAgree(uid, tid);
         mysql.delAgree(tid);
         return RespBody.ok(null);

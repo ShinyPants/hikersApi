@@ -1,0 +1,37 @@
+package wyl.hikers.service;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import wyl.hikers.config.SysConfig;
+import wyl.hikers.dao.mapper.MpDiscuss;
+import wyl.hikers.model.DiscussInfo;
+import wyl.hikers.model.RespBody;
+
+import java.util.List;
+
+@Slf4j
+@Service
+public class SvcDiscuss {
+    @Autowired
+    private MpDiscuss mysql;
+
+    @Autowired
+    private SvcPermission permission;
+
+    @Autowired
+    private SysConfig config;
+
+    public RespBody addDiscuss(DiscussInfo info) {
+        permission.checkPermission(info.getUid(), info.getPwd(), "SvcDiscuss.addDiscuss");
+        if (mysql.addDiscuss(info) > 0)
+            return RespBody.ok(null);
+        return RespBody.failed(null);
+    }
+
+    public RespBody getDiscusses(Integer tid, Integer did) {
+        log.info(String.format("tid: %s, did: %s, num: %s", tid, did, config.getTopicLoadNum()));
+        List<DiscussInfo> list = mysql.getDiscuss(tid, did, config.getTopicLoadNum());
+        return RespBody.ok(list);
+    }
+}

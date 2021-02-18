@@ -19,6 +19,11 @@ public class UsrTopic {
         return service.addTopic(topic);
     }
 
+    @GetMapping
+    public RespBody getOneTopic(@RequestParam Integer tid) {
+        return service.getOneTopic(tid);
+    }
+
     @GetMapping("/topics")
     public RespBody getTopics(@RequestParam Integer pid, @RequestParam Integer tid) {
         return service.getTopics(pid, tid);
@@ -26,33 +31,31 @@ public class UsrTopic {
 
     @GetMapping("/collect")
     public RespBody isCollect(@RequestParam Integer uid, @RequestParam Integer tid) {
-        log.info("isCollect " + uid + " " + tid);
         return service.isCollect(uid, tid);
     }
 
-    @PutMapping("/collect/{uid}/{tid}")
-    public RespBody addCollect(@PathVariable Integer uid, @PathVariable Integer tid) {
-        return service.addCollect(uid, tid);
+    @PutMapping("/collect/{uid}/{tid}/{pwd}")
+    public RespBody addCollect(@PathVariable Integer uid, @PathVariable Integer tid, @PathVariable String pwd) {
+        return service.addCollect(uid, tid, pwd);
     }
 
     @DeleteMapping("/collect")
-    public RespBody delCollect(@RequestParam Integer uid, @RequestParam Integer tid) {
-        return service.delCollect(uid, tid);
+    public RespBody delCollect(@RequestParam Integer uid, @RequestParam Integer tid, @RequestParam String pwd) {
+        return service.delCollect(uid, tid, pwd);
     }
 
     @GetMapping("/agree")
     public RespBody isAgree(@RequestParam Integer uid, @RequestParam Integer tid) {
-        log.info("isCollect " + uid + " " + tid);
         return service.isAgree(uid, tid);
     }
 
-    @PutMapping("/agree/{uid}/{tid}")
-    public RespBody addAgree(@PathVariable Integer uid, @PathVariable Integer tid) {
-        return service.addAgree(uid, tid);
+    @PutMapping("/agree/{uid}/{tid}/{pwd}")
+    public RespBody addAgree(@PathVariable Integer uid, @PathVariable Integer tid, @PathVariable String pwd) {
+        return service.addAgree(uid, tid, pwd);
     }
 
     @DeleteMapping("/agree")
-    public RespBody delAgree(@RequestParam Integer uid, @RequestParam Integer tid) {
-        return service.delAgree(uid, tid);
+    public RespBody delAgree(@RequestParam Integer uid, @RequestParam Integer tid, @RequestParam String pwd) {
+        return service.delAgree(uid, tid, pwd);
     }
 }

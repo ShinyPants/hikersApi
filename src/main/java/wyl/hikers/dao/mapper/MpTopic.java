@@ -16,6 +16,11 @@ public interface MpTopic {
     Integer addTopic(@Param("t") Topic topic);
 
     @Select({"<script>" +
+            "SELECT * FROM v_topic_info WHERE tid = #{tid} LIMIT 1" +
+            "</script>"})
+    TopicInfo getOneTopic(Integer tid);
+
+    @Select({"<script>" +
             "SELECT * FROM v_topic_info WHERE pid = #{pid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
             "</script>"})
     List<TopicInfo> getTopicsBottom(Integer pid, Integer tid, Integer num);

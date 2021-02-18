@@ -11,6 +11,12 @@ public class SvcPermission {
     @Autowired
     private RdsUser redis;
 
+    /**
+     * 检查用户身份
+     * @param uid 用户id
+     * @param pwd 用户的口令
+     * @param position 调用该方法的位置
+     */
     public void checkPermission(Integer uid, String pwd, String position) {
         OnlineUser user = redis.getOnline(uid);
         // 不存在
