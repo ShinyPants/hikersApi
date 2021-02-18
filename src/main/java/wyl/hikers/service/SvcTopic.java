@@ -54,7 +54,12 @@ public class SvcTopic {
     }
 
     public RespBody getTopics(Integer pid, Integer tid) {
-        List<TopicInfo> list = mysql.getTopicsBottom(pid, tid, config.getTopicLoadNum());
+        List<TopicInfo> list = mysql.getTopics(pid, tid, config.getTopicLoadNum());
+        return RespBody.ok(list);
+    }
+
+    public RespBody getTopicsByUser(Integer uid, Integer tid) {
+        List<TopicInfo> list = mysql.getTopicsByUser(uid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
     }
 

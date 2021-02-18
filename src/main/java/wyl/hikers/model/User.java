@@ -17,4 +17,6 @@ public class User implements Serializable {
     private Date birthday;
     private String uname;
     private String photo;
+    private Integer focus;
+    private Integer fans;
 }

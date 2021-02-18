@@ -41,4 +41,7 @@ public interface MpUser {
     @Async("asyncService")
     @Update("UPDATE users SET fans = fans + #{num} WHERE uid = #{uid};")
     Integer updateFans(Integer uid, Integer num);
+
+    @Select("SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid = #{uid} LIMIT 1")
+    User getUser(Integer uid);
 }

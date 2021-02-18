@@ -80,4 +80,9 @@ public class UsrUser {
     public RespBody delFocus(@RequestParam Integer uid, @RequestParam Integer tuid, @RequestParam String pwd) {
         return service.delFocus(uid, tuid, pwd);
     }
+
+    @GetMapping
+    public RespBody getUser(@RequestParam Integer uid) {
+        return service.getUser(uid);
+    }
 }

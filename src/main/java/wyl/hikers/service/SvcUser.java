@@ -24,6 +24,9 @@ public class SvcUser {
     @Autowired
     private RdsFocus redisFocus;
 
+    @Autowired
+    private SvcPermission permission;
+
     /**
      * 注册
      * @param user uid字段在这里没用，mail属性可选
@@ -136,6 +139,7 @@ public class SvcUser {
      * @return
      */
     public RespBody addFocus(Integer uid, Integer tuid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcUser.addFocus");
         redisFocus.addFocus(uid, tuid);
         mysql.updateFocus(uid, 1);
         mysql.updateFans(tuid, 1);
@@ -147,9 +151,15 @@ public class SvcUser {
      * @return
      */
     public RespBody delFocus(Integer uid, Integer tuid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcUser.delFocus");
         redisFocus.delFocus(uid, tuid);
         mysql.updateFocus(uid, -1);
         mysql.updateFans(tuid, -1);
         return null;
+    }
+
+    public RespBody getUser(Integer uid) {
+        User user = mysql.getUser(uid);
+        return RespBody.ok(user);
     }
 }

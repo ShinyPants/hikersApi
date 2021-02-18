@@ -23,7 +23,10 @@ public interface MpTopic {
     @Select({"<script>" +
             "SELECT * FROM v_topic_info WHERE pid = #{pid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
             "</script>"})
-    List<TopicInfo> getTopicsBottom(Integer pid, Integer tid, Integer num);
+    List<TopicInfo> getTopics(Integer pid, Integer tid, Integer num);
+
+    @Select("SELECT * FROM v_topic_info WHERE uid = #{uid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}")
+    List<TopicInfo> getTopicsByUser(Integer uid, Integer tid, Integer num);
 
     @Async("asyncService")
     @Update({"<script>" +

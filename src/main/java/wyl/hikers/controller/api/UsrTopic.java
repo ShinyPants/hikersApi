@@ -29,6 +29,11 @@ public class UsrTopic {
         return service.getTopics(pid, tid);
     }
 
+    @GetMapping("/topics/{uid}/{tid}")
+    public RespBody getTopicsByUser(@PathVariable Integer uid, @PathVariable Integer tid) {
+        return service.getTopicsByUser(uid, tid);
+    }
+
     @GetMapping("/collect")
     public RespBody isCollect(@RequestParam Integer uid, @RequestParam Integer tid) {
         return service.isCollect(uid, tid);
