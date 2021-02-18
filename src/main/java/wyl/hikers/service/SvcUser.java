@@ -2,8 +2,8 @@ package wyl.hikers.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import wyl.hikers.dao.redis.RdsFocus;
 import wyl.hikers.dao.redis.RdsUser;
 import wyl.hikers.exception.MysqlException;
 import wyl.hikers.model.RespBody;
@@ -20,6 +20,9 @@ public class SvcUser {
 
     @Autowired
     private RdsUser redis;
+
+    @Autowired
+    private RdsFocus redisFocus;
 
     /**
      * 注册
@@ -118,5 +121,35 @@ public class SvcUser {
         if (res > 0)
             return RespBody.ok(false);
         return RespBody.ok(true);
+    }
+
+    /**
+     * 检查是否关注了
+     * @return
+     */
+    public RespBody isFocus(Integer uid, Integer tuid) {
+        return RespBody.ok(redisFocus.isFocus(uid, tuid));
+    }
+
+    /**
+     * 添加关注
+     * @return
+     */
+    public RespBody addFocus(Integer uid, Integer tuid, String pwd) {
+        redisFocus.addFocus(uid, tuid);
+        mysql.updateFocus(uid, 1);
+        mysql.updateFans(tuid, 1);
+        return null;
+    }
+
+    /**
+     * 不再关注
+     * @return
+     */
+    public RespBody delFocus(Integer uid, Integer tuid, String pwd) {
+        redisFocus.delFocus(uid, tuid);
+        mysql.updateFocus(uid, -1);
+        mysql.updateFans(tuid, -1);
+        return null;
     }
 }

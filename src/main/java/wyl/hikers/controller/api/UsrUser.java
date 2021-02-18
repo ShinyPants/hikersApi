@@ -53,4 +53,31 @@ public class UsrUser {
     public RespBody checkMail(@PathVariable("mail") String mail) {
         return service.checkMail(mail);
     }
+
+    /**
+     * 检查是否关注了
+     * @return
+     */
+    @GetMapping("/focus")
+    public RespBody isFocus(@RequestParam Integer uid, @RequestParam Integer tuid) {
+        return service.isFocus(uid, tuid);
+    }
+
+    /**
+     * 添加关注
+     * @return
+     */
+    @PutMapping("/focus/{uid}/{tuid}/{pwd}")
+    public RespBody addFocus(@PathVariable Integer uid, @PathVariable Integer tuid, @PathVariable String pwd) {
+        return service.addFocus(uid, tuid, pwd);
+    }
+
+    /**
+     * 不再关注
+     * @return
+     */
+    @DeleteMapping("/focus")
+    public RespBody delFocus(@RequestParam Integer uid, @RequestParam Integer tuid, @RequestParam String pwd) {
+        return service.delFocus(uid, tuid, pwd);
+    }
 }

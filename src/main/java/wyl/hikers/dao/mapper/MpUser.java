@@ -1,9 +1,7 @@
 package wyl.hikers.dao.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.ResultType;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.springframework.scheduling.annotation.Async;
 import wyl.hikers.model.User;
 
 @Mapper
@@ -35,4 +33,12 @@ public interface MpUser {
     @Select("SELECT COUNT(uid) FROM users WHERE mail=#{0}")
     @ResultType(Integer.class)
     Integer checkMail(String mail);
+
+    @Async("asyncService")
+    @Update("UPDATE users SET focus = focus + #{num} WHERE uid = #{uid};")
+    Integer updateFocus(Integer uid, Integer num);
+
+    @Async("asyncService")
+    @Update("UPDATE users SET fans = fans + #{num} WHERE uid = #{uid};")
+    Integer updateFans(Integer uid, Integer num);
 }
