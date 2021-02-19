@@ -6,6 +6,7 @@ import wyl.hikers.model.Topic;
 import wyl.hikers.model.TopicInfo;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface MpTopic {
@@ -27,6 +28,15 @@ public interface MpTopic {
 
     @Select("SELECT * FROM v_topic_info WHERE uid = #{uid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}")
     List<TopicInfo> getTopicsByUser(Integer uid, Integer tid, Integer num);
+
+    @Select({"<script>" +
+            "SELECT * FROM v_topic_info WHERE uid in " +
+            "<foreach collection='list' item='uid' open='(' close=')' separator=', '>" +
+            "#{uid}" +
+            "</foreach>" +
+            " AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
+            "</script>"})
+    List<TopicInfo> getTopicsByFocus(Set<String> list, Integer tid, Integer num);
 
     @Async("asyncService")
     @Update({"<script>" +
