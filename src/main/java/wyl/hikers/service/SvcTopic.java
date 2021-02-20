@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wyl.hikers.config.SysConfig;
+import wyl.hikers.dao.mapper.MpDiscuss;
 import wyl.hikers.dao.mapper.MpTopic;
 import wyl.hikers.dao.redis.RdsTopic;
 import wyl.hikers.exception.MysqlException;
@@ -22,6 +23,9 @@ public class SvcTopic {
 
     @Autowired
     private MpTopic mysql;
+
+    @Autowired
+    private MpDiscuss mysqlDiscuss;
 
     @Autowired
     private RdsTopic redis;
@@ -62,6 +66,17 @@ public class SvcTopic {
         List<TopicInfo> list = mysql.getTopicsByUser(uid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
     }
+
+    public RespBody delTopic(Integer tid, Integer uid, String pwd) {
+        permission.checkPermission(uid, pwd, "SvcTopic.delTopic");
+        // 先删除评论
+        mysqlDiscuss.delDiscuss(tid);
+        // 再删除帖子
+        mysql.delTopic(tid);
+        return RespBody.ok(null);
+    }
+
+
 
     public RespBody isCollect(Integer uid, Integer tid) {
         boolean flag = redis.isCollect(uid, tid);

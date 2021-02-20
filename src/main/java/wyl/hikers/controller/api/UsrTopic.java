@@ -34,6 +34,11 @@ public class UsrTopic {
         return service.getTopicsByUser(uid, tid);
     }
 
+    @DeleteMapping("/topics")
+    public RespBody delTopic(Integer tid, Integer uid, String pwd) {
+        return service.delTopic(tid, uid, pwd);
+    }
+
     @GetMapping("/collect")
     public RespBody isCollect(@RequestParam Integer uid, @RequestParam Integer tid) {
         return service.isCollect(uid, tid);

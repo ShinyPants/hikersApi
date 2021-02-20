@@ -1,5 +1,6 @@
 package wyl.hikers.dao.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -18,4 +19,7 @@ public interface MpDiscuss {
             "SELECT * FROM v_discuss_info WHERE tid=#{tid} AND did > #{did} ORDER BY did DESC LIMIT #{num};" +
             "</script>"})
     List<DiscussInfo> getDiscuss(Integer tid, Integer did, Integer num);
+
+    @Delete("DELETE FROM discuss WHERE tid = #{tid}")
+    void delDiscuss(Integer tid);
 }

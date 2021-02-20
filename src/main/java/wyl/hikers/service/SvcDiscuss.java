@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wyl.hikers.config.SysConfig;
 import wyl.hikers.dao.mapper.MpDiscuss;
+import wyl.hikers.dao.mapper.MpTopic;
 import wyl.hikers.model.DiscussInfo;
 import wyl.hikers.model.RespBody;
 
@@ -17,6 +18,9 @@ public class SvcDiscuss {
     private MpDiscuss mysql;
 
     @Autowired
+    private MpTopic mysqlTopic;
+
+    @Autowired
     private SvcPermission permission;
 
     @Autowired
@@ -24,8 +28,10 @@ public class SvcDiscuss {
 
     public RespBody addDiscuss(DiscussInfo info) {
         permission.checkPermission(info.getUid(), info.getPwd(), "SvcDiscuss.addDiscuss");
-        if (mysql.addDiscuss(info) > 0)
+        if (mysql.addDiscuss(info) > 0) {
+            mysqlTopic.updateDiscuss(info.getTid());
             return RespBody.ok(null);
+        }
         return RespBody.failed(null);
     }
 

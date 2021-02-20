@@ -143,7 +143,7 @@ public class SvcUser {
         redisFocus.addFocus(uid, tuid);
         mysql.updateFocus(uid, 1);
         mysql.updateFans(tuid, 1);
-        return null;
+        return RespBody.ok(null);
     }
 
     /**
@@ -155,7 +155,7 @@ public class SvcUser {
         redisFocus.delFocus(uid, tuid);
         mysql.updateFocus(uid, -1);
         mysql.updateFans(tuid, -1);
-        return null;
+        return RespBody.ok(null);
     }
 
     public RespBody getUser(Integer uid) {

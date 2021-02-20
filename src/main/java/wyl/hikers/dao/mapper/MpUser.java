@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.scheduling.annotation.Async;
 import wyl.hikers.model.User;
 
+import java.util.List;
+import java.util.Set;
+
 @Mapper
 public interface MpUser {
     @Insert({"<script>" +
@@ -44,4 +47,12 @@ public interface MpUser {
 
     @Select("SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid = #{uid} LIMIT 1")
     User getUser(Integer uid);
+
+    @Select({"<script>" +
+            "SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid = " +
+            "<foreach collection='list' item='uid' open='(' close=')' separator=', '>" +
+            "#{uid}" +
+            "</foreach>" +
+            "</script>"})
+    List<User> getUsers(Set<String> list);
 }

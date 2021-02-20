@@ -38,6 +38,9 @@ public interface MpTopic {
             "</script>"})
     List<TopicInfo> getTopicsByFocus(Set<String> list, Integer tid, Integer num);
 
+    @Delete("DELETE FROM topics WHERE tid = #{tid}")
+    void delTopic(Integer tid);
+
     @Async("asyncService")
     @Update({"<script>" +
             "UPDATE topics SET collect = collect + 1 WHERE tid = #{tid};" +
@@ -61,4 +64,7 @@ public interface MpTopic {
             "UPDATE topics SET agree = agree - 1 WHERE tid = #{tid};" +
             "</script>"})
     void delAgree(Integer tid);
+
+    @Update("UPDATE topics SET discuss = discuss + 1 WHERE tid = #{tid};")
+    void updateDiscuss(Integer tid);
 }
