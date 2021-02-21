@@ -48,11 +48,23 @@ public interface MpUser {
     @Select("SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid = #{uid} LIMIT 1")
     User getUser(Integer uid);
 
+    @Select("SELECT uid, phone, nikeName, mail, photo FROM users WHERE uid = #{uid} LIMIT 1")
+    User getUserInfo(Integer uid);
+
     @Select({"<script>" +
-            "SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid = " +
+            "SELECT uid, nikeName, photo, focus, fans FROM users WHERE uid in " +
             "<foreach collection='list' item='uid' open='(' close=')' separator=', '>" +
             "#{uid}" +
             "</foreach>" +
             "</script>"})
     List<User> getUsers(Set<String> list);
+
+    @Update("UPDATE users SET phone = #{phone} WHERE uid = #{uid};")
+    Integer updatePhone(Integer uid, String phone);
+
+    @Update("UPDATE users SET mail = #{mail} WHERE uid = #{uid};")
+    Integer updateMail(Integer uid, String mail);
+
+    @Update("UPDATE users SET photo = #{photo} WHERE uid = #{uid};")
+    Integer updatePhoto(Integer uid, String photo);
 }

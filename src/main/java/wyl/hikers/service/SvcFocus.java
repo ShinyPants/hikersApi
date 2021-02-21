@@ -21,6 +21,9 @@ public class SvcFocus {
 
     public RespBody getFocuses(Integer uid) {
         Set<String> focus = redis.getFocus(uid);
+        if (focus.size() == 0) {
+            return RespBody.ok(null);
+        }
         List<User> list = mysqlUser.getUsers(focus);
         return RespBody.ok(list);
     }

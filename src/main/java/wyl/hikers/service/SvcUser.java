@@ -162,4 +162,31 @@ public class SvcUser {
         User user = mysql.getUser(uid);
         return RespBody.ok(user);
     }
+
+    public RespBody getUserInfo(Integer uid) {
+        User user = mysql.getUserInfo(uid);
+        return RespBody.ok(user);
+    }
+
+    public RespBody updatePhone(Integer uid, String pwd, String phone) {
+        permission.checkPermission(uid, pwd, "SvcUser.updatePhone");
+        if (mysql.checkPhone(phone) > 0)
+            return RespBody.failed(null);
+        mysql.updatePhone(uid, phone);
+        return RespBody.ok(null);
+    }
+
+    public RespBody updateMail(Integer uid, String pwd, String mail) {
+        permission.checkPermission(uid, pwd, "SvcUser.updateMail");
+        if (mysql.checkMail(mail) > 0)
+            return RespBody.failed(null);
+        mysql.updateMail(uid, mail);
+        return RespBody.ok(null);
+    }
+
+    public RespBody updatePhoto(Integer uid, String pwd, String photo) {
+        permission.checkPermission(uid, pwd, "SvcUser.updatePhoto");
+        mysql.updatePhoto(uid, photo);
+        return RespBody.ok(null);
+    }
 }

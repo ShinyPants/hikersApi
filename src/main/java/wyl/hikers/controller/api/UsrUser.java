@@ -85,4 +85,24 @@ public class UsrUser {
     public RespBody getUser(@RequestParam Integer uid) {
         return service.getUser(uid);
     }
+
+    @GetMapping("/info/{uid}")
+    public RespBody getUserInfo(@PathVariable Integer uid) {
+        return service.getUserInfo(uid);
+    }
+
+    @PutMapping("/phone/{uid}/{pwd}/{phone}")
+    public RespBody updatePhone(@PathVariable Integer uid, @PathVariable String pwd, @PathVariable String phone) {
+        return service.updatePhone(uid, pwd, phone);
+    }
+
+    @PutMapping("/mail/{uid}/{pwd}/{mail}")
+    public RespBody updateMail(@PathVariable Integer uid, @PathVariable String pwd, @PathVariable String mail) {
+        return service.updateMail(uid, pwd, mail);
+    }
+
+    @PutMapping("/photo")
+    public RespBody updatePhoto(@RequestBody User user) {
+        return service.updatePhoto(user.getUid(), user.getPwd(), user.getPhoto());
+    }
 }
