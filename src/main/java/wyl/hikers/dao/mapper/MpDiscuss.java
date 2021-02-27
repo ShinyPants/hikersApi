@@ -16,7 +16,7 @@ public interface MpDiscuss {
     Integer addDiscuss(DiscussInfo info);
 
     @Select({"<script>" +
-            "SELECT * FROM v_discuss_info WHERE tid=#{tid} AND did > #{did} ORDER BY did DESC LIMIT #{num};" +
+            "SELECT * FROM v_discuss_info WHERE tid=#{tid} AND did &lt; #{did} ORDER BY did DESC LIMIT #{num};" +
             "</script>"})
     List<DiscussInfo> getDiscuss(Integer tid, Integer did, Integer num);
 

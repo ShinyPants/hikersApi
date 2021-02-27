@@ -22,11 +22,11 @@ public interface MpTopic {
     TopicInfo getOneTopic(Integer tid);
 
     @Select({"<script>" +
-            "SELECT * FROM v_topic_info WHERE pid = #{pid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
+            "SELECT * FROM v_topic_info WHERE pid = #{pid} AND tid &lt; #{tid} ORDER BY tid DESC LIMIT #{num}" +
             "</script>"})
     List<TopicInfo> getTopics(Integer pid, Integer tid, Integer num);
 
-    @Select("SELECT * FROM v_topic_info WHERE uid = #{uid} AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}")
+    @Select("SELECT * FROM v_topic_info WHERE uid = #{uid} AND tid < #{tid} ORDER BY tid DESC LIMIT #{num}")
     List<TopicInfo> getTopicsByUser(Integer uid, Integer tid, Integer num);
 
     @Select({"<script>" +
@@ -34,7 +34,7 @@ public interface MpTopic {
             "<foreach collection='list' item='uid' open='(' close=')' separator=', '>" +
             "#{uid}" +
             "</foreach>" +
-            " AND tid > #{tid} ORDER BY tid DESC LIMIT #{num}" +
+            " AND tid &lt; #{tid} ORDER BY tid DESC LIMIT #{num}" +
             "</script>"})
     List<TopicInfo> getTopicsByFocus(Set<String> list, Integer tid, Integer num);
 

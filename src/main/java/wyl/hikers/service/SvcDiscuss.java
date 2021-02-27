@@ -36,7 +36,9 @@ public class SvcDiscuss {
     }
 
     public RespBody getDiscusses(Integer tid, Integer did) {
-        log.info(String.format("tid: %s, did: %s, num: %s", tid, did, config.getTopicLoadNum()));
+        if (did == 0) {
+            did = Integer.MAX_VALUE;
+        }
         List<DiscussInfo> list = mysql.getDiscuss(tid, did, config.getTopicLoadNum());
         return RespBody.ok(list);
     }

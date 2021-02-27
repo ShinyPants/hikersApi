@@ -15,6 +15,9 @@ public class UsrDynamic {
 
     @GetMapping
     public RespBody getDynamics(Integer uid, Integer tid) {
+        if (tid == 0) {
+            tid = Integer.MAX_VALUE;
+        }
         return service.getDynamics(uid, tid);
     }
 }

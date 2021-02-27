@@ -17,4 +17,4 @@ logging:
 
 sys-setting:
   uploadPath: D:/hpics/
-  topicLoadNum: 20
+  topicLoadNum: 10

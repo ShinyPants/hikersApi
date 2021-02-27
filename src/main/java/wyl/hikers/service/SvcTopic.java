@@ -58,11 +58,17 @@ public class SvcTopic {
     }
 
     public RespBody getTopics(Integer pid, Integer tid) {
+        if (tid == 0) {
+            tid = Integer.MAX_VALUE;
+        }
         List<TopicInfo> list = mysql.getTopics(pid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
     }
 
     public RespBody getTopicsByUser(Integer uid, Integer tid) {
+        if (tid == 0) {
+            tid = Integer.MAX_VALUE;
+        }
         List<TopicInfo> list = mysql.getTopicsByUser(uid, tid, config.getTopicLoadNum());
         return RespBody.ok(list);
     }
