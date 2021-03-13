@@ -2,6 +2,7 @@ package wyl.hikers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import wyl.hikers.dao.redis.RdsAdmin;
 import wyl.hikers.dao.redis.RdsUser;
 import wyl.hikers.exception.PermissionException;
 import wyl.hikers.model.OnlineUser;
@@ -10,6 +11,9 @@ import wyl.hikers.model.OnlineUser;
 public class SvcPermission {
     @Autowired
     private RdsUser redis;
+
+    @Autowired
+    private RdsAdmin rdsAdmin;
 
     /**
      * 检查用户身份

@@ -82,6 +82,14 @@ public class SvcTopic {
         return RespBody.ok(null);
     }
 
+    public RespBody delTopicByAdm(Integer tid) {
+        // 先删除评论
+        mysqlDiscuss.delDiscuss(tid);
+        // 再删除帖子
+        mysql.delTopic(tid);
+        return RespBody.ok(null);
+    }
+
 
 
     public RespBody isCollect(Integer uid, Integer tid) {
@@ -120,5 +128,10 @@ public class SvcTopic {
         redis.delAgree(uid, tid);
         mysql.delAgree(tid);
         return RespBody.ok(null);
+    }
+
+    public RespBody searchTopics(Integer pid, String keyWord) {
+        List<TopicInfo> list = mysql.searchTopics(pid, keyWord);
+        return RespBody.ok(list);
     }
 }

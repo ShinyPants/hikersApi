@@ -24,6 +24,11 @@ public class UsrTopic {
         return service.getOneTopic(tid);
     }
 
+    @GetMapping("/search")
+    public RespBody searchTopics(@RequestParam Integer pid, @RequestParam String keyWord) {
+        return service.searchTopics(pid, keyWord);
+    }
+
     @GetMapping("/topics")
     public RespBody getTopics(@RequestParam Integer pid, @RequestParam Integer tid) {
         return service.getTopics(pid, tid);

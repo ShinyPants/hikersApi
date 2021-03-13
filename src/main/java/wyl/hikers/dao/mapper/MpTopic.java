@@ -67,4 +67,7 @@ public interface MpTopic {
 
     @Update("UPDATE topics SET discuss = discuss + 1 WHERE tid = #{tid};")
     void updateDiscuss(Integer tid);
+
+    @Select("SELECT * FROM v_topic_info WHERE pid=#{pid} AND (title LIKE '%${keyWord}%' OR info LIKE '%${keyWord}%');")
+    List<TopicInfo> searchTopics(Integer pid, String keyWord);
 }
