@@ -6,6 +6,7 @@ import wyl.hikers.model.Part;
 import wyl.hikers.model.RespBody;
 import wyl.hikers.service.SvcParts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,9 @@ public class AdmParts {
     }
 
     @PutMapping
-    public RespBody updateParts(@RequestBody List<Part> parts) {
-        return RespBody.ok(service.updateParts(parts));
+    public RespBody updateParts(@RequestBody Part part) {
+        List<Part> list = new ArrayList<>();
+        list.add(part);
+        return RespBody.ok(service.updateParts(list));
     }
 }

@@ -44,6 +44,11 @@ public class SvcParts{
         return refreshFromMysql();
     }
 
+//    public void updatePart(Part part) {
+//        // TODO: 修改
+//        refreshFromMysql();
+//    }
+
     public List<Part> updateParts(List<Part> partList) {
         // TODO: 检查身份
         // 更新到MySQL
