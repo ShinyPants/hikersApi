@@ -60,4 +60,9 @@ public class SvcFile {
         // 进行保存
         return doSavePic(file);
     }
+
+    public RespBody savePic(MultipartFile file) {
+        // 进行保存
+        return doSavePic(file);
+    }
 }

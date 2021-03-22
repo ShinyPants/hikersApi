@@ -15,9 +15,14 @@ public class FileCtrl {
     private SvcFile service;
 
     @PostMapping("/pic")
-    public RespBody uploadPics(@RequestParam("file")MultipartFile file,
+    public RespBody uploadPics(@RequestParam("file") MultipartFile file,
                                @RequestParam("uid") Integer uid,
                                @RequestParam("pwd") String pwd) {
         return service.savePic(file, uid, pwd);
+    }
+
+    @PostMapping("/admpic")
+    public RespBody uploadPics(@RequestParam("file") MultipartFile file) {
+        return service.savePic(file);
     }
 }
