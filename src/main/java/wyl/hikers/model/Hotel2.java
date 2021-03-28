@@ -5,12 +5,12 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class Hotel implements Serializable {
+public class Hotel2 implements Serializable {
     private Integer hid;
     private Integer sid;
     private String hname;
     private String address;
     private String info;
-    private Room[] rooms;
+    private String rooms;
     private String roomsjson;
 }
