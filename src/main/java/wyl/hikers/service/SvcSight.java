@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import wyl.hikers.dao.mapper.MpSight;
 import wyl.hikers.model.RespBody;
 import wyl.hikers.model.Sight;
+import wyl.hikers.model.Sight2;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class SvcSight {
     }
 
     public RespBody getSights() {
-        List<Sight> list = mysql.getSights();
+        List<Sight2> list = mysql.getSights();
         return RespBody.ok(list);
     }
 

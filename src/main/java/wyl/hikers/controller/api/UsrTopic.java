@@ -73,4 +73,9 @@ public class UsrTopic {
     public RespBody delAgree(@RequestParam Integer uid, @RequestParam Integer tid, @RequestParam String pwd) {
         return service.delAgree(uid, tid, pwd);
     }
+
+    @GetMapping("/hp")
+    public RespBody getByHp() {
+        return service.getByHp();
+    }
 }

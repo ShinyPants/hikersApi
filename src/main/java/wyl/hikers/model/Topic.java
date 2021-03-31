@@ -16,4 +16,5 @@ public class Topic implements Serializable {
     private String pwd;
     private String picsJSON;
     private Date time;
+    private Integer hotpoint;
 }

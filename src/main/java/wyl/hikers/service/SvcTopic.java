@@ -101,6 +101,7 @@ public class SvcTopic {
         permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.addCollect(uid, tid);
         mysql.addCollect(tid);
+        mysql.addHotpoint(tid, 5);
         return RespBody.ok(null);
     }
 
@@ -108,6 +109,7 @@ public class SvcTopic {
         permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.delCollect(uid, tid);
         mysql.delCollect(tid);
+        mysql.delHotpoint(tid, 5);
         return RespBody.ok(null);
     }
 
@@ -120,6 +122,7 @@ public class SvcTopic {
         permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.addAgree(uid, tid);
         mysql.addAgree(tid);
+        mysql.addHotpoint(tid, 3);
         return RespBody.ok(null);
     }
 
@@ -127,11 +130,17 @@ public class SvcTopic {
         permission.checkPermission(uid, pwd, "SvcTopic.addCollect");
         redis.delAgree(uid, tid);
         mysql.delAgree(tid);
+        mysql.delHotpoint(tid, 3);
         return RespBody.ok(null);
     }
 
     public RespBody searchTopics(Integer pid, String keyWord) {
         List<TopicInfo> list = mysql.searchTopics(pid, keyWord);
+        return RespBody.ok(list);
+    }
+
+    public RespBody getByHp() {
+        List<TopicInfo> list = mysql.getByHp();
         return RespBody.ok(list);
     }
 }

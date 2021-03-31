@@ -23,6 +23,7 @@ public class TopicInfo implements Serializable {
     private Integer collect;
     private Integer discuss;
     private Integer agree;
+    private Integer hotpoint;
 
     public void setPics(String picsJSON) {
         this.pics = JSON.parseArray(picsJSON, String.class);

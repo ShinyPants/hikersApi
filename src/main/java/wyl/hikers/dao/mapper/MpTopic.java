@@ -70,4 +70,13 @@ public interface MpTopic {
 
     @Select("SELECT * FROM v_topic_info WHERE pid=#{pid} AND (title LIKE '%${keyWord}%' OR info LIKE '%${keyWord}%');")
     List<TopicInfo> searchTopics(Integer pid, String keyWord);
+
+    @Update("update topics set hotpoint=hotpoint+#{n} where tid=#{tid};")
+    void addHotpoint(Integer tid, Integer n);
+
+    @Update("update topics set hotpoint=hotpoint-#{n} where tid=#{tid};")
+    void delHotpoint(Integer tid, Integer n);
+
+    @Select("select * from v_topic_info order by hotpoint desc limit 20")
+    List<TopicInfo> getByHp();
 }

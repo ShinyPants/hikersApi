@@ -21,4 +21,10 @@ public interface MpHotel {
 
     @Update("update hotels set sid=#{sid}, hname=#{hname},address=#{address},info=#{info},rooms=#{roomsjson} where hid=#{hid};")
     Integer updateHotel(Hotel hotel);
+
+    @Select("select * from hotels where sid=#{sid}")
+    List<Hotel2> getHotelsBySid(Integer sid);
+
+    @Select("select * from hotels where hid=#{hid}")
+    Hotel2 getHotelByHid(Integer hid);
 }

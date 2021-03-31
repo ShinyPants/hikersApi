@@ -33,4 +33,14 @@ public class SvcHotel {
         mysql.updateHotel(hotel);
         return RespBody.ok(null);
     }
+
+    public RespBody getHotelsBySid(Integer sid) {
+        List<Hotel2> list = mysql.getHotelsBySid(sid);
+        return RespBody.ok(list);
+    }
+
+    public RespBody getHotelByHid(Integer hid) {
+        Hotel2 hotel = mysql.getHotelByHid(hid);
+        return RespBody.ok(hotel);
+    }
 }
