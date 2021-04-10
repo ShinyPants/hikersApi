@@ -2,6 +2,7 @@ package wyl.hikers.controller.adm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wyl.hikers.model.RespBody;
@@ -13,8 +14,8 @@ public class AdmTopic {
     @Autowired
     private SvcTopic service;
 
-    @DeleteMapping
-    public RespBody deleteTopic(Integer tid) {
+    @DeleteMapping("/{tid}")
+    public RespBody deleteTopic(@PathVariable Integer tid) {
         return service.delTopicByAdm(tid);
     }
 }
